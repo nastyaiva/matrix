@@ -6,15 +6,15 @@ using namespace std;
 
 
     struct Matrix {
- // двумерный массив с данными.
+ // Г¤ГўГіГ¬ГҐГ°Г­Г»Г© Г¬Г Г±Г±ГЁГў Г± Г¤Г Г­Г­Г»Г¬ГЁ.
   int** data_=nullptr;
- // количество столбцов
+ // ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±ГІГ®Г«ГЎГ¶Г®Гў
   size_t n_ = 0u;
- // количество строк
+ // ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±ГІГ°Г®ГЄ
   size_t m_ = 0u;
 };
 
-// Создает заполненную нулями матрицу n x m.
+// Г‘Г®Г§Г¤Г ГҐГІ Г§Г ГЇГ®Г«Г­ГҐГ­Г­ГіГѕ Г­ГіГ«ГїГ¬ГЁ Г¬Г ГІГ°ГЁГ¶Гі n x m.
 void Construct(Matrix& out, size_t n, size_t m)
 {
     out.n_=n;
@@ -33,18 +33,19 @@ void Construct(Matrix& out, size_t n, size_t m)
     }
     return;
 }
-// Освобождает выделенную память.
+// ГЋГ±ГўГ®ГЎГ®Г¦Г¤Г ГҐГІ ГўГ»Г¤ГҐГ«ГҐГ­Г­ГіГѕ ГЇГ Г¬ГїГІГј.
 void Destruct(Matrix& in)
 {
    for (size_t i=0; i<in.n_;++i)
    {
-      delete  in.data_[i];
+      delete[]  in.data_[i];
    }
-   return;
+   delete[] in.data_;
+   in.data_ = nullptr;
 }
 
 
-// Создает копию матрицы |matrix|.
+// Г‘Г®Г§Г¤Г ГҐГІ ГЄГ®ГЇГЁГѕ Г¬Г ГІГ°ГЁГ¶Г» |matrix|.
 Matrix Copy(const Matrix& matrix)
 {
     Matrix matrix_copy;
@@ -58,8 +59,8 @@ Matrix Copy(const Matrix& matrix)
     }
     return matrix_copy;
 }
-// Возвращает сумму двух матриц.
-// Если операция невозможна - вернуть пустую матрицу
+// Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г±ГіГ¬Г¬Гі Г¤ГўГіГµ Г¬Г ГІГ°ГЁГ¶.
+// Г…Г±Г«ГЁ Г®ГЇГҐГ°Г Г¶ГЁГї Г­ГҐГўГ®Г§Г¬Г®Г¦Г­Г  - ГўГҐГ°Г­ГіГІГј ГЇГіГ±ГІГіГѕ Г¬Г ГІГ°ГЁГ¶Гі
 Matrix Add(const Matrix& a, const Matrix& b)
 {
     if ((a.m_==b.m_)&&(a.n_==b.m_))
@@ -77,8 +78,8 @@ Matrix Add(const Matrix& a, const Matrix& b)
     }
     return Matrix();
 }
-// Возвращает разницу двух матриц.
-// Если операция невозможна - вернуть пустую матрицу
+// Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г°Г Г§Г­ГЁГ¶Гі Г¤ГўГіГµ Г¬Г ГІГ°ГЁГ¶.
+// Г…Г±Г«ГЁ Г®ГЇГҐГ°Г Г¶ГЁГї Г­ГҐГўГ®Г§Г¬Г®Г¦Г­Г  - ГўГҐГ°Г­ГіГІГј ГЇГіГ±ГІГіГѕ Г¬Г ГІГ°ГЁГ¶Гі
 Matrix Sub(const Matrix& a, const Matrix& b)
 {
     if ((a.m_==b.m_)&&(a.n_==b.m_))
@@ -96,8 +97,8 @@ Matrix Sub(const Matrix& a, const Matrix& b)
     }
     return Matrix();
 }
-// Возвращает произведение двух матриц.
-// Если операция невозможна - вернуть пустую матрицу
+// Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГЇГ°Г®ГЁГ§ГўГҐГ¤ГҐГ­ГЁГҐ Г¤ГўГіГµ Г¬Г ГІГ°ГЁГ¶.
+// Г…Г±Г«ГЁ Г®ГЇГҐГ°Г Г¶ГЁГї Г­ГҐГўГ®Г§Г¬Г®Г¦Г­Г  - ГўГҐГ°Г­ГіГІГј ГЇГіГ±ГІГіГѕ Г¬Г ГІГ°ГЁГ¶Гі
 Matrix Mult(const Matrix& a, const Matrix& b)
 {
    if ((a.m_==b.m_)&&(a.n_==b.m_))
@@ -119,7 +120,7 @@ Matrix Mult(const Matrix& a, const Matrix& b)
     return Matrix();
 }
 
-// Транспонирование матрицы.
+// Г’Г°Г Г­Г±ГЇГ®Г­ГЁГ°Г®ГўГ Г­ГЁГҐ Г¬Г ГІГ°ГЁГ¶Г».
 void Transposition(Matrix&x)
 {
     Matrix matrix_res;
