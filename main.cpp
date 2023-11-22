@@ -38,9 +38,9 @@ void Destruct(Matrix& in)
 {
    for (size_t i=0; i<in.n_;++i)
    {
-      delete[]  in.data_[i];
+      delete []  in.data_[i];
    }
-   delete[] in.data_;
+   delete [] in.data_;
    in.data_ = nullptr;
 }
 
